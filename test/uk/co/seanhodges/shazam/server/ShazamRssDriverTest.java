@@ -11,10 +11,11 @@ import com.xtremelabs.robolectric.RobolectricTestRunner;
 import static org.junit.Assert.*;
 
 import uk.co.seanhodges.shazam.rss.RssFeedStatics;
+import uk.co.seanhodges.shazam.server.ShazamRssDriver;
 
 @RunWith(RobolectricTestRunner.class)
 public class ShazamRssDriverTest {
-
+	
 	@Test
 	public void testLoadingAnRssFeedFromShazam() throws Exception {
 		ShazamRssDriver driver = new ShazamRssDriver();

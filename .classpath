@@ -10,6 +10,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/ShazamTagViewer/libs/commons-io-2.0.1/commons-io-2.0.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/roboelectric-0.9.8/robolectric-0.9.8-jar-with-dependencies.jar" sourcepath="libs/roboelectric-0.9.8/robolectric-0.9.8-sources.jar"/>
+	<classpathentry kind="lib" path="libs/robolectric-1.0.0-RC1/robolectric-1.0-RC1-jar-with-dependencies.jar" sourcepath="libs/robolectric-1.0.0-RC1/robolectric-1.0-RC1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
