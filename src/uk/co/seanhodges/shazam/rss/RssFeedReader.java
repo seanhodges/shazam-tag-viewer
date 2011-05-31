@@ -9,6 +9,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.util.Log;
+
 import uk.co.seanhodges.shazam.model.FeedChannel;
 import uk.co.seanhodges.shazam.model.FeedItem;
 
@@ -72,6 +74,11 @@ public class RssFeedReader extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
+		if (Log.isLoggable(getClass().getName(), Log.DEBUG)) {
+			if (RssFeedStatics.FEED_CHANNEL_ITEM.equals(currentTag)) {
+				Log.d(getClass().getName(), "Feed item found: " + currentTag.toString());
+			}
+		}
 		currentTag = null;
 	}
 	

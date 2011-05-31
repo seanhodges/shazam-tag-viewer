@@ -11,20 +11,24 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int icon=0x7f020000;
+        public static final int feed_icon_14x14=0x7f020000;
+        public static final int feed_icon_28x28=0x7f020001;
+        public static final int icon=0x7f020002;
     }
     public static final class id {
         public static final int btn_submit=0x7f050002;
-        public static final int lst_tags=0x7f050000;
+        public static final int lbl_entry_title=0x7f050000;
         public static final int txt_user_name=0x7f050001;
     }
     public static final class layout {
-        public static final int user_tag_list=0x7f030000;
-        public static final int username_entry=0x7f030001;
+        public static final int user_tag_entry=0x7f030000;
+        public static final int user_tag_list=0x7f030001;
+        public static final int username_entry=0x7f030002;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
-        public static final int btn_submit=0x7f040002;
+        public static final int btn_submit=0x7f040003;
         public static final int lbl_enter_user=0x7f040001;
+        public static final int lbl_no_tags=0x7f040002;
     }
 }

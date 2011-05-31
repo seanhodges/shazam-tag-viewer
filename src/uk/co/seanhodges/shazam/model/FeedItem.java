@@ -38,4 +38,10 @@ public class FeedItem implements Serializable {
 	public void setLink(URI link) {
 		this.link = link;
 	}
+
+	@Override
+	public String toString() {
+		return "FeedItem [trackName=" + trackName + ", trackArtist="
+				+ trackArtist + ", link=" + link + "]";
+	}
 }

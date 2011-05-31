@@ -4,6 +4,7 @@ import uk.co.seanhodges.shazam.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -20,7 +21,7 @@ public class UsernameEntry extends Activity implements OnClickListener {
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    	super.onCreate(savedInstanceState);
         setContentView(R.layout.username_entry);
         
         // Bind fields to views
@@ -39,7 +40,9 @@ public class UsernameEntry extends Activity implements OnClickListener {
 	}
 
 	private void launchUserTagListActivity() {
+        Log.i(getClass().getName(), "Launching tag list activity");
 		String userName = userNameField.getText().toString();
+        Log.d(getClass().getName(), "Username was " + userName);
 		Intent destination = new Intent(this, UserTagList.class);
 		destination.putExtra(UserTagList.PARAM_USER_NAME, userName);
 		startActivity(destination);

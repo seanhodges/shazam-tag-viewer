@@ -20,4 +20,9 @@ public class FeedChannel implements Serializable {
 	public void setEntries(List<FeedItem> entries) {
 		this.entries = entries;
 	}
+
+	@Override
+	public String toString() {
+		return "FeedChannel [entries=" + entries + "]";
+	}
 }
