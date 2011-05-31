@@ -4,16 +4,12 @@ import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import com.xtremelabs.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.*;
 
 import uk.co.seanhodges.shazam.rss.RssFeedStatics;
 import uk.co.seanhodges.shazam.server.ShazamRssDriver;
 
-@RunWith(RobolectricTestRunner.class)
 public class ShazamRssDriverTest {
 	
 	@Test
