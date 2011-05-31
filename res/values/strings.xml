@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ShazamTagViewer</string>
+    
+    <string name="lbl_enter_user">Please enter a username to view their tags</string>
+    
+    <string name="btn_submit">Continue</string>
+</resources>
