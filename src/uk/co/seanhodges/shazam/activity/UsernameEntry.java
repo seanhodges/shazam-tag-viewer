@@ -1,5 +1,6 @@
-package uk.co.seanhodges.shazam;
+package uk.co.seanhodges.shazam.activity;
 
+import uk.co.seanhodges.shazam.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * Request a user name and send to the UserTagList activity
+ * @author Sean Hodges <seanhodges84@gmail.com>
+ */
 public class UsernameEntry extends Activity implements OnClickListener {
 	
 	private EditText userNameField;
@@ -18,9 +23,11 @@ public class UsernameEntry extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.username_entry);
         
+        // Bind fields to views
         userNameField = (EditText)findViewById(R.id.txt_user_name);
         submit = (Button)findViewById(R.id.btn_submit);
         
+        // Add listeners
         submit.setOnClickListener(this);
     }
 

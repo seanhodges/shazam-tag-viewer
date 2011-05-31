@@ -1,6 +1,7 @@
 package uk.co.seanhodges.shazam.rss;
 
 import java.net.URI;
+
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -11,6 +12,10 @@ import org.xml.sax.helpers.DefaultHandler;
 import uk.co.seanhodges.shazam.model.FeedChannel;
 import uk.co.seanhodges.shazam.model.FeedItem;
 
+/**
+ * SAX parser for the Shazam tag RSS feed
+ * @author Sean Hodges <seanhodges84@gmail.com>
+ */
 public class RssFeedReader extends DefaultHandler {
 	
 	private FeedChannel result;

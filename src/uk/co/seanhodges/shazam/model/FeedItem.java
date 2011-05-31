@@ -3,6 +3,10 @@ package uk.co.seanhodges.shazam.model;
 import java.io.Serializable;
 import java.net.URI;
 
+/**
+ * A single item in the FeedChannel item list
+ * @author Sean Hodges <seanhodges84@gmail.com>
+ */
 public class FeedItem implements Serializable {
 	
 	private static final long serialVersionUID = -9199321602507592085L;

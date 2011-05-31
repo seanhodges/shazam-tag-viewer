@@ -1,9 +1,14 @@
-package uk.co.seanhodges.shazam;
+package uk.co.seanhodges.shazam.activity;
 
+import uk.co.seanhodges.shazam.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+/**
+ * Displays the tag table for a given user
+ * @author Sean Hodges <seanhodges84@gmail.com>
+ */
 public class UserTagList extends Activity {
 
 	public static final String PARAM_USER_NAME = "username";
