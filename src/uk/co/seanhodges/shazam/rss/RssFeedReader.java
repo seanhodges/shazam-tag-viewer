@@ -74,9 +74,9 @@ public class RssFeedReader extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		if (Log.isLoggable(getClass().getName(), Log.DEBUG)) {
+		if (Log.isLoggable(getClass().getSimpleName(), Log.DEBUG)) {
 			if (RssFeedStatics.FEED_CHANNEL_ITEM.equals(currentTag)) {
-				Log.d(getClass().getName(), "Feed item found: " + currentTag.toString());
+				Log.d(getClass().getSimpleName(), "Feed item found: " + currentTag.toString());
 			}
 		}
 		currentTag = null;

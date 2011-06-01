@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ShazamTagViewer</string>
+    <string name="app_name">Shazam Tag Viewer</string> <!-- Application name -->
+    <string name="shazam_server">FakeShazamDriver</string> <!-- Driver to use for contacting server -->
     
+    <!-- Language messages -->
     <string name="lbl_enter_user">Please enter a username to view their tags</string>
     <string name="lbl_no_tags">This user has no tags</string>
     

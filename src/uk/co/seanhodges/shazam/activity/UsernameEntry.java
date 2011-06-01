@@ -40,9 +40,9 @@ public class UsernameEntry extends Activity implements OnClickListener {
 	}
 
 	private void launchUserTagListActivity() {
-        Log.i(getClass().getName(), "Launching tag list activity");
+        Log.i(getClass().getSimpleName(), "Launching tag list activity");
 		String userName = userNameField.getText().toString();
-        Log.d(getClass().getName(), "Username was " + userName);
+        Log.d(getClass().getSimpleName(), "Username was " + userName);
 		Intent destination = new Intent(this, UserTagList.class);
 		destination.putExtra(UserTagList.PARAM_USER_NAME, userName);
 		startActivity(destination);

@@ -15,19 +15,13 @@ import android.net.http.AndroidHttpClient;
  * Helper for sending queries to the Shazam server
  * @author Sean Hodges <seanhodges84@gmail.com>
  */
-public class ShazamRssDriver {
+public class HttpShazamDriver implements IShazamDriver {
 	
 	private final String SERVER_ENDPOINT = "http://www.shazam.com/music/web";
 	
 	private final String TAGLIST_REQUEST = "/taglistrss?mode=xml&userName={username}";
 	
-	/**
-	 * Get the tag list for a given user
-	 * @param userName
-	 * @return the FeedChannel containing the tag list
-	 * @throws IOException
-	 * @throws URISyntaxException
-	 */
+	@Override
 	public InputStream getTagRssFeed(String userName) throws IOException, URISyntaxException {
 		URI url = new URI(getTaglistRequestUrl(userName));
 		

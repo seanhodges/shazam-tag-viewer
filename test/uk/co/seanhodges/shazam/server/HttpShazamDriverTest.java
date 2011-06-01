@@ -8,13 +8,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import uk.co.seanhodges.shazam.rss.RssFeedStatics;
-import uk.co.seanhodges.shazam.server.ShazamRssDriver;
+import uk.co.seanhodges.shazam.server.HttpShazamDriver;
 
-public class ShazamRssDriverTest {
+public class HttpShazamDriverTest {
 	
 	@Test
 	public void testLoadingAnRssFeedFromShazam() throws Exception {
-		ShazamRssDriver driver = new ShazamRssDriver();
+		IShazamDriver driver = new HttpShazamDriver();
 		InputStream is = driver.getTagRssFeed("shazam");
 		
 		String output = IOUtils.toString(is, RssFeedStatics.RSS_ENCODING);
