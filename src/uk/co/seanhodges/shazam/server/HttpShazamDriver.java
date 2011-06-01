@@ -8,8 +8,7 @@ import java.net.URISyntaxException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-
-import android.net.http.AndroidHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * Helper for sending queries to the Shazam server
@@ -26,7 +25,7 @@ public class HttpShazamDriver implements IShazamDriver {
 		URI url = new URI(getTaglistRequestUrl(userName));
 		
 		// Send request and return response
-		HttpClient client = AndroidHttpClient.newInstance("");
+		HttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
 		HttpResponse resp = client.execute(request);
 		int status = resp.getStatusLine().getStatusCode();

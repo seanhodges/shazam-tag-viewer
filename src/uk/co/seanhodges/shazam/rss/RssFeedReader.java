@@ -1,14 +1,12 @@
 package uk.co.seanhodges.shazam.rss;
 
-import java.net.URI;
-
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.net.Uri;
 import android.util.Log;
 
 import uk.co.seanhodges.shazam.model.FeedChannel;
@@ -62,12 +60,7 @@ public class RssFeedReader extends DefaultHandler {
 			currentFeedItem.setTrackArtist(text);
 		}
 		else if (RssFeedStatics.FEED_CHANNEL_ITEM_LINK.equals(currentTag) && currentFeedItem != null) {
-			try {
-				currentFeedItem.setLink(new URI(text));
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-				currentFeedItem.setLink(null);
-			}
+			currentFeedItem.setLink(Uri.parse(text));
 		}
 	}
 	

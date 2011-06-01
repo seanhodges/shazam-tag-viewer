@@ -16,6 +16,8 @@ import uk.co.seanhodges.shazam.rss.RssFeedStatics;
 import uk.co.seanhodges.shazam.server.IShazamDriver;
 import uk.co.seanhodges.shazam.server.ShazamDriverFactory;
 import android.app.ListActivity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +31,9 @@ import android.widget.ListView;
 public class UserTagList extends ListActivity {
 
 	public static final String PARAM_USER_NAME = "username";
+	
+	private static final String DISABLE_MOBILE_QUERY_KEY = "no_mobile";
+	private static final String DISABLE_MOBILE_QUERY_VALUE = "1";
 	
 	private String userName;
 	
@@ -81,6 +86,15 @@ public class UserTagList extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		Log.d(getClass().getSimpleName(), "Tag row selected: " + position);
+		
+		FeedItem item = (FeedItem)getListAdapter().getItem(position);
+		
+		Uri.Builder targetUrlBuilder = item.getLink().buildUpon();
+		targetUrlBuilder.appendQueryParameter(DISABLE_MOBILE_QUERY_KEY, DISABLE_MOBILE_QUERY_VALUE);
+		Uri targetUrl = targetUrlBuilder.build();
+		Log.i(getClass().getSimpleName(), "Opening browser with URL: " + targetUrl);
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, targetUrl);
+		startActivity(browserIntent);
 	}
 
 }

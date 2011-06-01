@@ -1,7 +1,8 @@
 package uk.co.seanhodges.shazam.model;
 
 import java.io.Serializable;
-import java.net.URI;
+
+import android.net.Uri;
 
 /**
  * A single item in the FeedChannel item list
@@ -13,7 +14,7 @@ public class FeedItem implements Serializable {
 
 	private String trackName;
 	private String trackArtist;
-	private URI link;
+	private Uri link;
 	
 	public String getTrackName() {
 		return trackName;
@@ -31,11 +32,11 @@ public class FeedItem implements Serializable {
 		this.trackArtist = trackArtist;
 	}
 	
-	public URI getLink() {
+	public Uri getLink() {
 		return link;
 	}
 	
-	public void setLink(URI link) {
+	public void setLink(Uri link) {
 		this.link = link;
 	}
 
