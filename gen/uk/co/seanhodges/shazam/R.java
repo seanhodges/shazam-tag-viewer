@@ -16,9 +16,8 @@ public final class R {
         public static final int icon=0x7f020002;
     }
     public static final class id {
-        public static final int btn_submit=0x7f050002;
-        public static final int lbl_entry_title=0x7f050000;
-        public static final int txt_user_name=0x7f050001;
+        public static final int btn_submit=0x7f050001;
+        public static final int txt_user_name=0x7f050000;
     }
     public static final class layout {
         public static final int user_tag_entry=0x7f030000;
@@ -27,8 +26,14 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f040000;
-        public static final int btn_submit=0x7f040003;
-        public static final int lbl_enter_user=0x7f040001;
-        public static final int lbl_no_tags=0x7f040002;
+        public static final int btn_submit=0x7f040004;
+        /**  Driver to use for contacting server 
+ Language messages 
+         */
+        public static final int lbl_enter_user=0x7f040002;
+        public static final int lbl_no_tags=0x7f040003;
+        /**  Application name 
+         */
+        public static final int shazam_server=0x7f040001;
     }
 }

@@ -12,7 +12,9 @@ import uk.co.seanhodges.shazam.R;
 import uk.co.seanhodges.shazam.model.FeedChannel;
 import uk.co.seanhodges.shazam.model.FeedItem;
 import uk.co.seanhodges.shazam.rss.RssFeedReader;
-import uk.co.seanhodges.shazam.server.ShazamRssDriver;
+import uk.co.seanhodges.shazam.rss.RssFeedStatics;
+import uk.co.seanhodges.shazam.server.IShazamDriver;
+import uk.co.seanhodges.shazam.server.ShazamDriverFactory;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,11 +43,11 @@ public class UserTagList extends ListActivity {
         	userName = intentExtras.getString(UserTagList.PARAM_USER_NAME);
 		
 			// TODO: Move this to a task
-	        Log.i(getClass().getName(), "Loading tags for user " + userName);
+	        Log.i(getClass().getSimpleName(), "Loading tags for user " + userName);
 			FeedChannel channel = null;
 			try {
 		        // Load the RSS XML
-		        ShazamRssDriver driver = new ShazamRssDriver();
+		        IShazamDriver driver = ShazamDriverFactory.getDriver(this);
 		        InputStream is = driver.getTagRssFeed(userName);
 		        
 		        // Parse the feed
@@ -55,12 +57,16 @@ public class UserTagList extends ListActivity {
 				
 				RssFeedReader handler = new RssFeedReader();
 				xr.setContentHandler(handler);
-				xr.parse(new InputSource(is));
+				
+				InputSource inputSource = new InputSource(is);
+				inputSource.setEncoding(RssFeedStatics.RSS_ENCODING);
+				xr.parse(inputSource);
 				
 				channel = handler.getFeed();
 				
 		        // Get the data, and pass to an adapter for displaying in the list
-		        ArrayAdapter<FeedItem> adapter = new ArrayAdapter<FeedItem>(this, R.layout.user_tag_entry, channel.getEntries());
+		        ArrayAdapter<FeedItem> adapter 
+		        	= new ArrayAdapter<FeedItem>(this, R.layout.user_tag_entry, channel.getEntries());
 		        setListAdapter(adapter);
 			}
 			catch (Exception e) {
@@ -68,13 +74,13 @@ public class UserTagList extends ListActivity {
 			}
         }
         else {
-        	Log.w(getClass().getName(), "No username was provided to activity");
+        	Log.w(getClass().getSimpleName(), "No username was provided to activity");
         }
 	}
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		Log.d(getClass().getName(), "Tag row selected: " + position);
+		Log.d(getClass().getSimpleName(), "Tag row selected: " + position);
 	}
 
 }
