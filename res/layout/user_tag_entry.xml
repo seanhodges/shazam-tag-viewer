@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
   android:orientation="horizontal"
-  />
-<!--   
+  android:padding="5dip"
+  >
+    
 <ImageView
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
+  android:scaleType="fitXY"
+  android:minWidth="48dip"
+  android:minHeight="48dip"
+  android:maxWidth="48dip"
+  android:maxHeight="48dip"
   android:src="@drawable/feed_icon_28x28"
   />
   
 <TextView
-  android:layout_width="wrap_content"
+  android:layout_width="fill_parent"
   android:layout_height="wrap_content"
+  android:layout_gravity="center_vertical|left"
+  android:paddingLeft="5dip"
   android:id="@+id/lbl_entry_title"
+  android:text="Some sample text"
   />
 
 </LinearLayout>
- -->
