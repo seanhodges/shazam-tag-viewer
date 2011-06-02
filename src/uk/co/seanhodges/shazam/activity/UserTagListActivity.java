@@ -5,6 +5,7 @@ import uk.co.seanhodges.shazam.model.FeedChannel;
 import uk.co.seanhodges.shazam.model.FeedItem;
 import uk.co.seanhodges.shazam.task.LoadUserTagsTask;
 import uk.co.seanhodges.shazam.task.LoadUserTagsTask.LoadUserTagsTaskListener;
+import uk.co.seanhodges.shazam.util.FeedItemListAdapter;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
@@ -60,8 +60,8 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 	@Override
 	public void onLoadUserTagsTaskComplete(FeedChannel result) {
 		// Get the data, and pass to an adapter for displaying in the list
-        ArrayAdapter<FeedItem> adapter 
-        	= new ArrayAdapter<FeedItem>(this, R.layout.user_tag_entry, result.getEntries());
+        FeedItemListAdapter adapter 
+        	= new FeedItemListAdapter(this, R.layout.user_tag_entry, result.getEntries());
         setListAdapter(adapter);
         
         // Close the progress bar
