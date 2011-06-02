@@ -1,21 +1,12 @@
 package uk.co.seanhodges.shazam.activity;
 
-import java.io.InputStream;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-
 import uk.co.seanhodges.shazam.R;
 import uk.co.seanhodges.shazam.model.FeedChannel;
 import uk.co.seanhodges.shazam.model.FeedItem;
-import uk.co.seanhodges.shazam.rss.RssFeedReader;
-import uk.co.seanhodges.shazam.rss.RssFeedStatics;
-import uk.co.seanhodges.shazam.server.IShazamDriver;
-import uk.co.seanhodges.shazam.server.ShazamDriverFactory;
+import uk.co.seanhodges.shazam.task.LoadUserTagsTask;
+import uk.co.seanhodges.shazam.task.LoadUserTagsTask.LoadUserTagsTaskListener;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,7 +19,7 @@ import android.widget.ListView;
  * Displays the tag table for a given user
  * @author Sean Hodges <seanhodges84@gmail.com>
  */
-public class UserTagList extends ListActivity {
+public class UserTagListActivity extends ListActivity implements LoadUserTagsTaskListener {
 
 	public static final String PARAM_USER_NAME = "username";
 	
@@ -36,6 +27,8 @@ public class UserTagList extends ListActivity {
 	private static final String DISABLE_MOBILE_QUERY_VALUE = "1";
 	
 	private String userName;
+	
+	private ProgressDialog progressDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,41 +38,33 @@ public class UserTagList extends ListActivity {
 		// Get the user name
         Bundle intentExtras = getIntent().getExtras();
         if (intentExtras != null) {
-        	userName = intentExtras.getString(UserTagList.PARAM_USER_NAME);
+        	userName = intentExtras.getString(UserTagListActivity.PARAM_USER_NAME);
 		
-			// TODO: Move this to a task
+			// Load the user tags
 	        Log.i(getClass().getSimpleName(), "Loading tags for user " + userName);
-			FeedChannel channel = null;
-			try {
-		        // Load the RSS XML
-		        IShazamDriver driver = ShazamDriverFactory.getDriver(this);
-		        InputStream is = driver.getTagRssFeed(userName);
-		        
-		        // Parse the feed
-				SAXParserFactory spf = SAXParserFactory.newInstance(); 
-				SAXParser sp = spf.newSAXParser(); 
-				XMLReader xr = sp.getXMLReader(); 
-				
-				RssFeedReader handler = new RssFeedReader();
-				xr.setContentHandler(handler);
-				
-				InputSource inputSource = new InputSource(is);
-				inputSource.setEncoding(RssFeedStatics.RSS_ENCODING);
-				xr.parse(inputSource);
-				
-				channel = handler.getFeed();
-				
-		        // Get the data, and pass to an adapter for displaying in the list
-		        ArrayAdapter<FeedItem> adapter 
-		        	= new ArrayAdapter<FeedItem>(this, R.layout.user_tag_entry, channel.getEntries());
-		        setListAdapter(adapter);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+			LoadUserTagsTask task = new LoadUserTagsTask(this, this);
+			task.execute(userName);
+			
+			// Display a progress bar whilst the task is executing
+			progressDialog = ProgressDialog.show(this, "Loading tags", "Getting tags from server, please wait...", true, false);
+			
+	        // See the onLoadUserTagsTaskComplete() method for the result handling
         }
         else {
         	Log.w(getClass().getSimpleName(), "No username was provided to activity");
+        }
+	}
+
+	@Override
+	public void onLoadUserTagsTaskComplete(FeedChannel result) {
+		// Get the data, and pass to an adapter for displaying in the list
+        ArrayAdapter<FeedItem> adapter 
+        	= new ArrayAdapter<FeedItem>(this, R.layout.user_tag_entry, result.getEntries());
+        setListAdapter(adapter);
+        
+        // Close the progress bar
+        if (progressDialog != null && progressDialog.isShowing()) {
+        	progressDialog.dismiss();
         }
 	}
 
@@ -88,13 +73,21 @@ public class UserTagList extends ListActivity {
 		Log.d(getClass().getSimpleName(), "Tag row selected: " + position);
 		
 		FeedItem item = (FeedItem)getListAdapter().getItem(position);
-		
+		launchTagDetailsInBrowser(item);
+	}
+
+	private void launchTagDetailsInBrowser(FeedItem item) {
 		Uri.Builder targetUrlBuilder = item.getLink().buildUpon();
-		targetUrlBuilder.appendQueryParameter(DISABLE_MOBILE_QUERY_KEY, DISABLE_MOBILE_QUERY_VALUE);
+		
+		// Add the "no_mobile=1" parameter to the URL to ensure we display the correct page
+		if (!item.getLink().toString().contains(DISABLE_MOBILE_QUERY_KEY)) {
+			targetUrlBuilder.appendQueryParameter(DISABLE_MOBILE_QUERY_KEY, DISABLE_MOBILE_QUERY_VALUE);
+		}
+		
 		Uri targetUrl = targetUrlBuilder.build();
+		
 		Log.i(getClass().getSimpleName(), "Opening browser with URL: " + targetUrl);
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, targetUrl);
 		startActivity(browserIntent);
 	}
-
 }

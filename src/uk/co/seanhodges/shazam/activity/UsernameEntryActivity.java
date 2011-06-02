@@ -14,7 +14,7 @@ import android.widget.EditText;
  * Request a user name and send to the UserTagList activity
  * @author Sean Hodges <seanhodges84@gmail.com>
  */
-public class UsernameEntry extends Activity implements OnClickListener {
+public class UsernameEntryActivity extends Activity implements OnClickListener {
 	
 	private EditText userNameField;
 	private Button submit;
@@ -43,8 +43,8 @@ public class UsernameEntry extends Activity implements OnClickListener {
         Log.i(getClass().getSimpleName(), "Launching tag list activity");
 		String userName = userNameField.getText().toString();
         Log.d(getClass().getSimpleName(), "Username was " + userName);
-		Intent destination = new Intent(this, UserTagList.class);
-		destination.putExtra(UserTagList.PARAM_USER_NAME, userName);
+		Intent destination = new Intent(this, UserTagListActivity.class);
+		destination.putExtra(UserTagListActivity.PARAM_USER_NAME, userName);
 		startActivity(destination);
 	}
     
