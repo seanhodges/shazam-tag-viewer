@@ -46,7 +46,9 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 			task.execute(userName);
 			
 			// Display a progress bar whilst the task is executing
-			progressDialog = ProgressDialog.show(this, "Loading tags", "Getting tags from server, please wait...", true, false);
+			progressDialog = ProgressDialog.show(this, 
+					getString(R.string.lbl_tag_load_progress_title), 
+					getString(R.string.lbl_tag_load_progress_message), true, false);
 			
 	        // See the onLoadUserTagsTaskComplete() method for the result handling
         }

@@ -6,6 +6,8 @@
     <!-- Language messages -->
     <string name="lbl_enter_user">Please enter a username to view their tags</string>
     <string name="lbl_no_tags">This user has no tags</string>
+    <string name="lbl_tag_load_progress_title">Loading tags</string>
+    <string name="lbl_tag_load_progress_message">Getting tags from server, please wait...</string>
     
     <string name="btn_submit">Continue</string>
 </resources>
