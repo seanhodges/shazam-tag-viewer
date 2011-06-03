@@ -13,10 +13,16 @@ import android.util.Log;
  */
 public class IntentDelegate {
 	
+	// Used when launching browser with Shazam.com URL, to ensure the mobile site is displayed
 	private static final String DISABLE_MOBILE_QUERY_KEY = "no_mobile";
 	private static final String DISABLE_MOBILE_QUERY_VALUE = "1";
 	
-	
+	/**
+	 * Navigate to the UserTagListActivity
+	 * 
+	 * @param context - app context
+	 * @param userName - username to pass to activity
+	 */
 	public static void launchUserTagListActivity(Context context, String userName) {
         Log.i(IntentDelegate.class.getSimpleName(), "Launching tag list activity");
 		Intent destination = new Intent(context, UserTagListActivity.class);
@@ -24,6 +30,12 @@ public class IntentDelegate {
 		context.startActivity(destination);
 	}
 
+	/**
+	 * Navigate to the tag details page on Shazam.com
+	 * 
+	 * @param context - app context
+	 * @param item - selected FeedItem object from feed
+	 */
 	public static void launchTagDetailsInBrowser(Context context, FeedItem item) {
 		Uri.Builder targetUrlBuilder = item.getLink().buildUpon();
 		

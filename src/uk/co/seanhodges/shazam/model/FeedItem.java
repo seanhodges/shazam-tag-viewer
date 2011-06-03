@@ -16,6 +16,12 @@ public class FeedItem implements Serializable {
 	private String trackArtist;
 	private Uri link;
 	
+	public FeedItem() {
+		trackName = "";
+		trackArtist = "";
+		link = null;
+	}
+	
 	public String getTrackName() {
 		return trackName;
 	}

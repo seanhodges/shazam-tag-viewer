@@ -50,17 +50,17 @@ public class RssFeedReader extends DefaultHandler {
 			throws SAXException {
 		String text = new String(ch, start, length);
 		
-		if (currentTag == null) {
+		if (currentTag == null || text.length() == 0) {
 			// Skip text outside the tags
 		}
 		else if (RssFeedStatics.FEED_CHANNEL_ITEM_NAME.equals(currentTag) && currentFeedItem != null) {
-			currentFeedItem.setTrackName(text);
+			currentFeedItem.setTrackName(text.trim());
 		}
 		else if (RssFeedStatics.FEED_CHANNEL_ITEM_ARTIST.equals(currentTag) && currentFeedItem != null) {
-			currentFeedItem.setTrackArtist(text);
+			currentFeedItem.setTrackArtist(text.trim());
 		}
 		else if (RssFeedStatics.FEED_CHANNEL_ITEM_LINK.equals(currentTag) && currentFeedItem != null) {
-			currentFeedItem.setLink(Uri.parse(text));
+			currentFeedItem.setLink(Uri.parse(text.trim()));
 		}
 	}
 	

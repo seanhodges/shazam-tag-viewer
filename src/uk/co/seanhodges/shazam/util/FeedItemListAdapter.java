@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -46,18 +46,14 @@ public class FeedItemListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int location, View convertView, ViewGroup root) {
-		LinearLayout itemLayout = (LinearLayout)LayoutInflater.from(context).inflate(entryLayoutId, root, false);
+		RelativeLayout itemLayout = (RelativeLayout)LayoutInflater.from(context).inflate(entryLayoutId, root, false);
 		FeedItem item = feedItems.get(location);
 		
-		// Compile the caption for this row
-		StringBuilder captionText = new StringBuilder();
-		captionText.append(item.getTrackArtist());
-		captionText.append(": ");
-		captionText.append(item.getTrackName());
-		
 		// Bind the item data to the row
-		TextView caption = (TextView)itemLayout.findViewById(R.id.lbl_entry_title);
-		caption.setText(captionText.toString());
+		TextView title = (TextView)itemLayout.findViewById(R.id.lbl_entry_title);
+		title.setText(item.getTrackName());
+		TextView artist = (TextView)itemLayout.findViewById(R.id.lbl_entry_artist);
+		artist.setText(item.getTrackArtist());
 		return itemLayout;
 	}
 
