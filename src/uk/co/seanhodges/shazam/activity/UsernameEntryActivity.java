@@ -1,8 +1,8 @@
 package uk.co.seanhodges.shazam.activity;
 
 import uk.co.seanhodges.shazam.R;
+import uk.co.seanhodges.shazam.flow.IntentDelegate;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,17 +35,10 @@ public class UsernameEntryActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (submit.getId() == v.getId()) {
-			launchUserTagListActivity();
+			String userName = userNameField.getText().toString();
+        	Log.d(getClass().getSimpleName(), "Username was " + userName);
+			IntentDelegate.launchUserTagListActivity(this, userName);
 		}
-	}
-
-	private void launchUserTagListActivity() {
-        Log.i(getClass().getSimpleName(), "Launching tag list activity");
-		String userName = userNameField.getText().toString();
-        Log.d(getClass().getSimpleName(), "Username was " + userName);
-		Intent destination = new Intent(this, UserTagListActivity.class);
-		destination.putExtra(UserTagListActivity.PARAM_USER_NAME, userName);
-		startActivity(destination);
 	}
     
 }

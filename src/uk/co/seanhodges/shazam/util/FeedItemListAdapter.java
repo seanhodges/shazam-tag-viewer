@@ -13,6 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * Custom list adapter for the tag list activity
+ * @author Sean Hodges <seanhodges84@gmail.com>
+ */
 public class FeedItemListAdapter extends BaseAdapter {
 
 	private Context context;

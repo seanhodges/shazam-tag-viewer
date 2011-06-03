@@ -17,6 +17,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+/**
+ * Retrieve the user tag feed and return to caller
+ * @author Sean Hodges <seanhodges84@gmail.com>
+ */
 public class LoadUserTagsTask extends AsyncTask<String, Integer, FeedChannel> {
 
 	private static IShazamDriver driver;
