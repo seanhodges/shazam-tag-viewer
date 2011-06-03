@@ -5,25 +5,35 @@
 	android:padding="10dip"
     >
     
-<ImageView
+<LinearLayout
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
   android:id="@+id/img_shazam_logo"
   android:layout_alignParentTop="true"
   android:layout_centerHorizontal="true"
-  android:layout_marginTop="20dip"
+  android:layout_marginTop="10dip"
+  >
+  
+<ImageView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:id="@+id/img_shazam_logo"
+  android:layout_centerVertical="true"
+  android:layout_marginRight="10dip"
   android:src="@drawable/shazam_logo"
   />
   
 <TextView  
     android:layout_width="wrap_content" 
-    android:layout_height="wrap_content" 
-	android:layout_below="@id/img_shazam_logo"
-	android:layout_centerHorizontal="true"
-	android:layout_marginTop="10dip"
+    android:layout_height="wrap_content"
+	android:layout_centerVertical="true"
+	android:layout_gravity="center_vertical"
+    android:layout_marginLeft="10dip"
     android:text="@string/app_name"
     />
   
+</LinearLayout>
+
 <EditText
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content"
