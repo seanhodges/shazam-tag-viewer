@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+	android:padding="10px"
     >
-    
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/lbl_enter_user"
-    />
     
 <EditText
     android:layout_width="fill_parent" 
@@ -19,11 +13,20 @@
     android:id="@+id/txt_user_name"
     />
     
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+	android:layout_above="@id/txt_user_name"
+	android:layout_marginBottom="10px"
+    android:text="@string/lbl_enter_user"
+    />
+    
 <Button
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:layout_centerHorizontal="true"
 	android:layout_below="@id/txt_user_name"
+	android:layout_marginTop="10px"
 	android:id="@+id/btn_submit"
 	android:text="@string/btn_submit"
 	/>

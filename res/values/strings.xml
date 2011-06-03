@@ -4,7 +4,7 @@
     <string name="shazam_server">FakeShazamDriver</string> <!-- Driver to use for contacting server -->
     
     <!-- Language messages -->
-    <string name="lbl_enter_user">Please enter a username to view their tags</string>
+    <string name="lbl_enter_user">Please enter a user name:</string>
     <string name="lbl_no_tags"></string>
     <string name="lbl_tag_load_progress_title">Loading tags</string>
     <string name="lbl_tag_load_progress_message">Getting tags from server, please wait...</string>

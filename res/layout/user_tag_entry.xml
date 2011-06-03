@@ -13,7 +13,7 @@
   android:scaleType="fitXY"
   android:minWidth="48px" android:minHeight="48px"
   android:maxWidth="48px" android:maxHeight="48px"
-  android:padding="0dip"
+  android:layout_margin="0dip"
   android:src="@drawable/feed_icon_48x48"
   />
   
@@ -23,7 +23,7 @@
   android:orientation="vertical"
   android:layout_toRightOf="@id/img_entry_icon"
   android:layout_centerVertical="true"
-  android:paddingLeft="10dip"
+  android:layout_marginLeft="10dip"
   >
 
 <TextView
