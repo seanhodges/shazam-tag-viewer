@@ -32,6 +32,7 @@ public class LoadUserTagsTask extends AsyncTask<String, Integer, FeedChannel> {
 	 */
 	public interface LoadUserTagsTaskListener {
 		public void onLoadUserTagsTaskComplete(FeedChannel result);
+		public void onLoadUserTagsTaskFailed();
 	}
 	
 	/**
@@ -77,7 +78,13 @@ public class LoadUserTagsTask extends AsyncTask<String, Integer, FeedChannel> {
 			output = handler.getFeed();
 			publishProgress(100);
 			
-			Log.i(getClass().getSimpleName(), "User tag loading task finished");
+			if (output.getEntries().size() == 0) {
+				Log.e(getClass().getSimpleName(), "No entries were returned for user");
+				output = null;
+			}
+			else {
+				Log.i(getClass().getSimpleName(), "User tag loading task finished");
+			}
 		}
 		catch (Exception e) {
 			Log.e(getClass().getSimpleName(), "Task failed to complete", e);
@@ -94,6 +101,9 @@ public class LoadUserTagsTask extends AsyncTask<String, Integer, FeedChannel> {
 		if (result != null) {
 			Log.d(getClass().getSimpleName(), "Passing result back to listener");
 			listener.onLoadUserTagsTaskComplete(result);
+		}
+		else {
+			listener.onLoadUserTagsTaskFailed();
 		}
 	}
 }

@@ -7,9 +7,11 @@ import uk.co.seanhodges.shazam.model.FeedItem;
 import uk.co.seanhodges.shazam.task.LoadUserTagsTask;
 import uk.co.seanhodges.shazam.task.LoadUserTagsTask.LoadUserTagsTaskListener;
 import uk.co.seanhodges.shazam.util.FeedItemListAdapter;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +26,7 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 	public static final String PARAM_USER_NAME = "username";
 
 	private static final int DIALOG_LOADING_PROGRESS = 200;
+	private static final int DIALOG_LOADING_FAILED = 201;
 	
 	private static volatile boolean isLoading = false;
 	
@@ -70,13 +73,26 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 		Dialog out = null;
 		switch(id) {
 		case DIALOG_LOADING_PROGRESS:
-	    	Log.d(getClass().getSimpleName(), "Showing loading progress dialog");
+			Log.d(getClass().getSimpleName(), "Showing loading progress dialog");
 			ProgressDialog progress = new ProgressDialog(this);
 			progress.setTitle(R.string.lbl_tag_load_progress_title); 
 			progress.setMessage(getString(R.string.lbl_tag_load_progress_message));
 			progress.setIndeterminate(true);
 			progress.setCancelable(false);
 			out = progress;
+			break;
+		case DIALOG_LOADING_FAILED:
+			Log.d(getClass().getSimpleName(), "Showing failed feed dialog");
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.lbl_tag_load_failed_message)
+			.setCancelable(false)
+			.setPositiveButton(R.string.btn_close, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dismissDialog(DIALOG_LOADING_FAILED);
+					UserTagListActivity.this.finish();
+				}
+			});
+			out = builder.create();
 			break;
 		}
 		return out;
@@ -97,6 +113,19 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
         removeDialog(DIALOG_LOADING_PROGRESS);
         
         isLoading = false;
+	}
+
+	@Override
+	public void onLoadUserTagsTaskFailed() {
+		Log.d(getClass().getSimpleName(), "Feed failed to load, alerting user and closing activity");
+		
+		// Close the progress bar
+        removeDialog(DIALOG_LOADING_PROGRESS);
+        
+        // Show the failed dialog
+        showDialog(DIALOG_LOADING_FAILED);
+        
+		isLoading = false;
 	}
 	
 	private void loadListAdapterContents() {

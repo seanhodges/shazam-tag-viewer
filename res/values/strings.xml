@@ -8,6 +8,8 @@
     <string name="lbl_no_tags"></string>
     <string name="lbl_tag_load_progress_title">Loading tags</string>
     <string name="lbl_tag_load_progress_message">Getting tags from server, please wait...</string>
+    <string name="lbl_tag_load_failed_message">No tags are available for this username</string>
     
     <string name="btn_submit">Continue</string>
+    <string name="btn_close">Close</string>
 </resources>
