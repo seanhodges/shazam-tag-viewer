@@ -25,36 +25,52 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 	private String userName;
 	
 	private ProgressDialog progressDialog;
+
+	private FeedChannel loadedFeed;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.user_tag_list);
 
-		// Get the user name
-        Bundle intentExtras = getIntent().getExtras();
-        if (intentExtras != null) {
-        	userName = intentExtras.getString(UserTagListActivity.PARAM_USER_NAME);
-		
-			// Load the user tags
-	        Log.i(getClass().getSimpleName(), "Loading tags for user " + userName);
-			LoadUserTagsTask task = new LoadUserTagsTask(this, this);
-			task.execute(userName);
+        loadedFeed = (FeedChannel)getLastNonConfigurationInstance();
+        
+        if (loadedFeed == null) {
+			// Get the user name
+	        Bundle intentExtras = getIntent().getExtras();
+	        if (intentExtras != null) {
+	        	userName = intentExtras.getString(UserTagListActivity.PARAM_USER_NAME);
 			
-			// Display a progress bar whilst the task is executing
-			progressDialog = ProgressDialog.show(this, 
-					getString(R.string.lbl_tag_load_progress_title), 
-					getString(R.string.lbl_tag_load_progress_message), true, false);
-			
-	        // See the onLoadUserTagsTaskComplete() method for the result handling
+				// Load the user tags
+		        Log.i(getClass().getSimpleName(), "Loading tags for user " + userName);
+				LoadUserTagsTask task = new LoadUserTagsTask(this, this);
+				task.execute(userName);
+				
+				// Display a progress bar whilst the task is executing
+				progressDialog = ProgressDialog.show(this, 
+						getString(R.string.lbl_tag_load_progress_title), 
+						getString(R.string.lbl_tag_load_progress_message), true, false);
+				
+		        // See the onLoadUserTagsTaskComplete() method for the result handling
+	        }
+	        else {
+	        	Log.w(getClass().getSimpleName(), "No username was provided to activity");
+	        }
         }
         else {
-        	Log.w(getClass().getSimpleName(), "No username was provided to activity");
+        	onLoadUserTagsTaskComplete(loadedFeed);
         }
 	}
 
 	@Override
+	public Object onRetainNonConfigurationInstance() {
+		return loadedFeed;
+	}
+
+	@Override
 	public void onLoadUserTagsTaskComplete(FeedChannel result) {
+		loadedFeed = result;
+		
 		// Get the data, and pass to an adapter for displaying in the list
         FeedItemListAdapter adapter 
         	= new FeedItemListAdapter(this, R.layout.user_tag_entry, result.getEntries());
