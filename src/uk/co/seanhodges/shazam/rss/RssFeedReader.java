@@ -21,6 +21,7 @@ public class RssFeedReader extends DefaultHandler {
 	private FeedChannel result;
 	private FeedItem currentFeedItem;
 	private String currentTag;
+	private boolean rootNodeFound = false;
 	
 	public RssFeedReader() {
 		result = null;
@@ -39,10 +40,17 @@ public class RssFeedReader extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 		currentTag = qName;
 		
-		if (RssFeedStatics.FEED_CHANNEL_ITEM.equals(currentTag)) {
+		if (!rootNodeFound && !RssFeedStatics.FEED_RSS_ROOT.equals(currentTag)) {
+			// Detect incorrect feed data, since we don't know what the problem
+			// was, we assume the user was not found...
+			fatalError(new UserNotFoundException());
+		}
+		else if (RssFeedStatics.FEED_CHANNEL_ITEM.equals(currentTag)) {
 			currentFeedItem = new FeedItem();
 			result.getEntries().add(currentFeedItem);
 		}
+		
+		rootNodeFound = true;
 	}
 	
 	@Override

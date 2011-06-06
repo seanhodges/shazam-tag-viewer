@@ -33,16 +33,18 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f040000;
-        public static final int btn_close=0x7f040008;
-        public static final int btn_submit=0x7f040007;
+        public static final int btn_close=0x7f04000a;
+        public static final int btn_submit=0x7f040009;
         /**  Driver to use for contacting server 
  Language messages 
          */
         public static final int lbl_enter_user=0x7f040002;
-        public static final int lbl_no_tags=0x7f040003;
-        public static final int lbl_tag_load_failed_message=0x7f040006;
-        public static final int lbl_tag_load_progress_message=0x7f040005;
-        public static final int lbl_tag_load_progress_title=0x7f040004;
+        public static final int lbl_no_tags=0x7f040004;
+        public static final int lbl_tag_load_failed_message=0x7f040007;
+        public static final int lbl_tag_load_progress_message=0x7f040006;
+        public static final int lbl_tag_load_progress_title=0x7f040005;
+        public static final int lbl_user_not_entered_message=0x7f040003;
+        public static final int lbl_user_not_found=0x7f040008;
         /**  Application name 
          */
         public static final int shazam_server=0x7f040001;

@@ -10,8 +10,17 @@ import java.util.List;
 public class FeedChannel implements Serializable {
 	
 	private static final long serialVersionUID = 5342808426455852767L;
-	
+
+	private boolean validUser;
 	private List<FeedItem> entries;
+
+	public void setValidUser(boolean validUser) {
+		this.validUser = validUser;
+	}
+
+	public boolean isValidUser() {
+		return validUser;
+	}
 	
 	public List<FeedItem> getEntries() {
 		return entries;

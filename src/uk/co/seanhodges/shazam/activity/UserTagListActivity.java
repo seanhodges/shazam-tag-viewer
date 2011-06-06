@@ -26,7 +26,8 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 	public static final String PARAM_USER_NAME = "username";
 
 	private static final int DIALOG_LOADING_PROGRESS = 200;
-	private static final int DIALOG_LOADING_FAILED = 201;
+	private static final int DIALOG_USER_NOT_FOUND = 201;
+	private static final int DIALOG_LOADING_FAILED = 202;
 	
 	private static volatile boolean isLoading = false;
 	
@@ -48,7 +49,6 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
             	userName = intentExtras.getString(UserTagListActivity.PARAM_USER_NAME);
     		
     			// Load the user tags
-    	        Log.i(getClass().getSimpleName(), "Loading tags for user " + userName);
     			LoadUserTagsTask task = new LoadUserTagsTask(this, this);
     			task.execute(userName);
     			
@@ -71,6 +71,7 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		Dialog out = null;
+		AlertDialog.Builder builder;
 		switch(id) {
 		case DIALOG_LOADING_PROGRESS:
 			Log.d(getClass().getSimpleName(), "Showing loading progress dialog");
@@ -81,9 +82,23 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 			progress.setCancelable(false);
 			out = progress;
 			break;
+		case DIALOG_USER_NOT_FOUND:
+			Log.d(getClass().getSimpleName(), "Showing user not found dialog");
+			builder = new AlertDialog.Builder(this);
+			builder.setCancelable(false)
+			.setPositiveButton(R.string.btn_close, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dismissDialog(DIALOG_USER_NOT_FOUND);
+					UserTagListActivity.this.finish();
+				}
+			});
+			out = builder.create();
+			String msg = getString(R.string.lbl_user_not_found).replace("{user}", userName);
+			((AlertDialog)out).setMessage(msg);
+			break;
 		case DIALOG_LOADING_FAILED:
 			Log.d(getClass().getSimpleName(), "Showing failed feed dialog");
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.lbl_tag_load_failed_message)
 			.setCancelable(false)
 			.setPositiveButton(R.string.btn_close, new DialogInterface.OnClickListener() {
@@ -96,6 +111,17 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 			break;
 		}
 		return out;
+	}
+
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		switch(id) {
+		case DIALOG_USER_NOT_FOUND:
+			// Update the message for this dialog
+			String msg = getString(R.string.lbl_user_not_found).replace("{user}", userName);
+			((AlertDialog)dialog).setMessage(msg);
+			break;
+		}
 	}
 
 	@Override
@@ -116,15 +142,18 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 	}
 
 	@Override
+	public void onLoadUserTagsTaskUserNotFound() {
+		Log.d(getClass().getSimpleName(), "Username not found, alerting user and closing activity");
+        removeDialog(DIALOG_LOADING_PROGRESS);
+        showDialog(DIALOG_USER_NOT_FOUND);
+		isLoading = false;
+	}
+
+	@Override
 	public void onLoadUserTagsTaskFailed() {
 		Log.d(getClass().getSimpleName(), "Feed failed to load, alerting user and closing activity");
-		
-		// Close the progress bar
         removeDialog(DIALOG_LOADING_PROGRESS);
-        
-        // Show the failed dialog
         showDialog(DIALOG_LOADING_FAILED);
-        
 		isLoading = false;
 	}
 	
@@ -140,5 +169,13 @@ public class UserTagListActivity extends ListActivity implements LoadUserTagsTas
 		Log.d(getClass().getSimpleName(), "Tag row selected: " + position);
 		FeedItem item = (FeedItem)getListAdapter().getItem(position);
 		IntentDelegate.launchTagDetailsInBrowser(this, item);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		userName = null;
+		loadedFeed = null;
+		isLoading = false;
 	}
 }

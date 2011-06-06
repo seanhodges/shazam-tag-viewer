@@ -11,6 +11,7 @@ import org.xml.sax.XMLReader;
 import uk.co.seanhodges.shazam.model.FeedChannel;
 import uk.co.seanhodges.shazam.rss.RssFeedReader;
 import uk.co.seanhodges.shazam.rss.RssFeedStatics;
+import uk.co.seanhodges.shazam.rss.UserNotFoundException;
 import uk.co.seanhodges.shazam.server.IShazamDriver;
 import uk.co.seanhodges.shazam.server.ShazamDriverFactory;
 import android.content.Context;
@@ -33,6 +34,7 @@ public class LoadUserTagsTask extends AsyncTask<String, Integer, FeedChannel> {
 	public interface LoadUserTagsTaskListener {
 		public void onLoadUserTagsTaskComplete(FeedChannel result);
 		public void onLoadUserTagsTaskFailed();
+		public void onLoadUserTagsTaskUserNotFound();
 	}
 	
 	/**
@@ -76,18 +78,19 @@ public class LoadUserTagsTask extends AsyncTask<String, Integer, FeedChannel> {
 			xr.parse(inputSource);
 			
 			output = handler.getFeed();
+			output.setValidUser(true);
 			publishProgress(100);
 			
-			if (output.getEntries().size() == 0) {
-				Log.e(getClass().getSimpleName(), "No entries were returned for user");
-				output = null;
-			}
-			else {
-				Log.i(getClass().getSimpleName(), "User tag loading task finished");
-			}
+			Log.i(getClass().getSimpleName(), "User tag loading task finished");
+		}
+		catch (UserNotFoundException e) {
+			Log.w(getClass().getSimpleName(), "User tag data was not in server response");
+			output = new FeedChannel();
+			output.setValidUser(false);
 		}
 		catch (Exception e) {
 			Log.e(getClass().getSimpleName(), "Task failed to complete", e);
+			output = null;
 		}
 		
 		return output;
@@ -98,12 +101,17 @@ public class LoadUserTagsTask extends AsyncTask<String, Integer, FeedChannel> {
 		super.onPostExecute(result);
 		
 		// Pass the result back to the listener
-		if (result != null) {
-			Log.d(getClass().getSimpleName(), "Passing result back to listener");
-			listener.onLoadUserTagsTaskComplete(result);
+		if (result == null) {
+			Log.d(getClass().getSimpleName(), "Executing failed callback");
+			listener.onLoadUserTagsTaskFailed();
+		}
+		else if (!result.isValidUser()) {
+			Log.d(getClass().getSimpleName(), "Executing user not found callback");
+			listener.onLoadUserTagsTaskUserNotFound();
 		}
 		else {
-			listener.onLoadUserTagsTaskFailed();
+			Log.d(getClass().getSimpleName(), "Executing completed callback");
+			listener.onLoadUserTagsTaskComplete(result);
 		}
 	}
 }

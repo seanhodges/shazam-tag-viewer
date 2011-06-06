@@ -5,10 +5,12 @@
     
     <!-- Language messages -->
     <string name="lbl_enter_user">Please enter a user name:</string>
+    <string name="lbl_user_not_entered_message">No username was given.</string>
     <string name="lbl_no_tags"></string>
     <string name="lbl_tag_load_progress_title">Loading tags</string>
     <string name="lbl_tag_load_progress_message">Getting tags from server, please wait...</string>
-    <string name="lbl_tag_load_failed_message">No tags are available for this user.</string>
+    <string name="lbl_tag_load_failed_message">There was a problem retrieving the information from Shazam, please try again later.</string>
+    <string name="lbl_user_not_found">No tags are available for {user}.</string>
     
     <string name="btn_submit">Continue</string>
     <string name="btn_close">Close</string>
