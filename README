@@ -1,4 +1,41 @@
 Android App : Shazam Tag Viewer
 Sean Hodges, 2011
 
-The aim was to complete an application for Android that would provide a table of tags 
+The aim was to complete an application for Android that would provide a table of tags for a 
+given user, and provide a means to drill down into the tag details for each result. 
+
+The requirements for this app are:
+
+- Android 2.2 or above
+- Supported screen sizes: QVGA, HVGA, WVGA
+- The APK requires the INTERNET permission
+
+
+The project consists of 2 activities and an ASyncTask:
+
+UsernameEntryActivity
+---------------------
+The entry point for the application, allows user to enter a username and pass it to the 
+UserTagListActivity.
+
+UserTagListActivity
+-------------------
+Interacts with LoadUserTagsTask and displays the tag list on the screen. 
+Selecting a row opens the selected tag details in the default browser.
+
+LoadUserTagsTask
+----------------
+A background task for interacting with the server and parsing the returned data
+
+
+Other notable components:
+
+HttpShazamDriver is responsible for communicating with the RSS server and retrieving the 
+results, using the HttpClient provided in the Android platform.
+
+RssFeedReader is a SAX parser for processing the RSS XML, it converts the into a set 
+results into a set of POJO's for inclusion in the tag list activity.
+
+Activity transitions are handled by the IntentDelegate, this keeps the application workflow in 
+one place.
+
