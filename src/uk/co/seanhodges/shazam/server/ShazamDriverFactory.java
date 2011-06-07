@@ -13,14 +13,19 @@ public class ShazamDriverFactory {
 	public static final String USE_DRIVER_FAKE = "FakeShazamDriver";
 	public static final String USE_DRIVER_HTTP = "HttpShazamDriver";
 	
+	private static IShazamDriver driver;
+	
 	/**
 	 * Get the driver for the running application
 	 * @param app context
 	 * @return the driver
 	 */
 	public static IShazamDriver getDriver(Context context) {
-		String driverSetting = context.getResources().getString(R.string.shazam_server);
-		return getDriver(driverSetting);
+		if (driver == null) {
+			String driverSetting = context.getResources().getString(R.string.shazam_server);
+			driver = getDriver(driverSetting);
+		}
+		return driver;
 	}
 
 	/**
