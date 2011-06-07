@@ -5,30 +5,30 @@ import java.io.InputStream;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.junit.Test;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
+
+import android.test.AndroidTestCase;
 
 import uk.co.seanhodges.shazam.model.FeedChannel;
 import uk.co.seanhodges.shazam.model.FeedItem;
 
-import static org.junit.Assert.*;
-
-public class RssFeedReaderTest {
-
-	@Test
+public class RssFeedReaderTest extends AndroidTestCase {
+	
 	public void testParsingAnRssFeed() throws Exception {
 		InputStream is = getClass().getResourceAsStream("test_rss_feed.xml");
 		
 		// Load the RSS XML
-		SAXParserFactory spf = SAXParserFactory.newInstance(); 
-		SAXParser sp = spf.newSAXParser(); 
-		XMLReader xr = sp.getXMLReader(); 
+		SAXParserFactory spf = SAXParserFactory.newInstance();
+		SAXParser sp = spf.newSAXParser();
+		XMLReader xr = sp.getXMLReader();
 		
 		// Parse the feed
 		RssFeedReader handler = new RssFeedReader();
 		xr.setContentHandler(handler);
-		xr.parse(new InputSource(is)); 
+		InputSource isource = new InputSource(is);
+		isource.setEncoding(RssFeedStatics.RSS_ENCODING);
+		xr.parse(isource); 
 		
 		FeedChannel feed = handler.getFeed(); 
 		
