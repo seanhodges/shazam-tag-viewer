@@ -20,7 +20,10 @@ The requirements for this app are:
 - Supported screen sizes: QVGA, HVGA, WVGA
 - The APK requires the INTERNET permission
 
-The project in its current state was produced in approx. 20 man hours.
+The project in its current state was produced in approx. 20 man hours. The source code 
+repository is also available for download on GitHub at:
+
+http://github.com/seanhodges/shazam-tag-viewer
 
 
 ------
